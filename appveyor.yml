@@ -38,6 +38,7 @@ build: off
 test_script:
     - cmd: assoc .py
     - cmd: ftype Python.File
+    - hello.py
     - "%CMD_IN_ENV% where python"
     - "%CMD_IN_ENV% assoc .py"
     - "%CMD_IN_ENV% ftype Python.File"
