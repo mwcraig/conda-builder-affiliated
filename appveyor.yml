@@ -1,5 +1,5 @@
-os: Previous Windows Server 2012 R2
-
+# os: Previous Windows Server 2012 R2
+#
 environment:
   CONDA_INSTALL_LOCN: "C:\\conda"
   CMD_IN_ENV: cmd /E:ON /V:ON /C Obvious-CI\scripts\obvci_appveyor_python_build_env.cmd
@@ -28,7 +28,7 @@ install:
     - cmd: conda config --set always_yes true
     - cmd: conda update --quiet conda
     - cmd: conda config --add channels astropy
-    - cmd: conda install --file appveyor_pinned.txt
+    - cmd: conda install --quiet --file appveyor_pinned.txt
     - cmd: conda list -e
     # Install obvious-ci; run 2to3 first if the build is python 3.
     - cmd: cd Obvious-CI & (if %CONDA_PY:~0,1%==3 2to3 -w .) & python setup.py install & cd ..
@@ -39,6 +39,10 @@ install:
 build: off
 
 test_script:
+    - cmd: assoc .py
+    - cmd: ftype Python.File
+    - cmd: %CMD_IN_ENV% assoc .py
+    - cmd: %CMD_IN_ENV% ftype Python.File
     - "%CMD_IN_ENV% python affiliate-builder\\prepare_packages.py requirements.txt"
     - if exist recipes %CMD_IN_ENV% obvci_conda_build_dir.py recipes astropy
     - if exist bdist_conda %CMD_IN_ENV% build_bdist.bat
