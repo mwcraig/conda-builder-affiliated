@@ -1,5 +1,3 @@
-os: Previous Windows Server 2012 R2
-
 branches:
   only:
     - master
