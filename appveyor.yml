@@ -1,12 +1,6 @@
 #os: Previous Windows Server 2012 R2
 #
 environment:
-  CONDA_INSTALL_LOCN: "C:\\conda"
-  CMD_IN_ENV: cmd /E:ON /V:ON /C Obvious-CI\scripts\obvci_appveyor_python_build_env.cmd
-
-  BINSTAR_TOKEN:
-    secure: eNFZ6uLsFUgtwjXf6n/vayT97T4sSX1nG3iv8Hfp2vWKIZJIQ6jmCeL/agYmnbiX
-
   matrix:
     - TARGET_ARCH: "x64"
       CONDA_PY: "27"
@@ -20,15 +14,7 @@ platform:
 install:
     - cmd: assoc .py
     - cmd: ftype Python.File
-    - cmd: git submodule update --init --recursive
-    - cmd: rmdir C:\cygwin /s /q
     - where python
-    - cmd: python Obvious-CI\bootstrap-obvious-ci-and-miniconda.py %CONDA_INSTALL_LOCN% %TARGET_ARCH% %CONDA_PY:~0,1% --without-obvci --miniconda-version latest
-    - cmd: SET PATH=%CONDA_INSTALL_LOCN%;%CONDA_INSTALL_LOCN%\Scripts;%PATH%
-    - where python
-    - cmd: conda config --set always_yes true
-    - cmd: conda update --quiet conda
-    - cmd: conda list -e
     - cmd: assoc .py
     - cmd: ftype Python.File
 
@@ -38,10 +24,5 @@ build: off
 test_script:
     - cmd: assoc .py
     - cmd: ftype Python.File
-    - hello.py
-    - "%CMD_IN_ENV% where python"
-    - "%CMD_IN_ENV% assoc .py"
-    - "%CMD_IN_ENV% ftype Python.File"
-    - "%CMD_IN_ENV% hello.py"
     - hello.py
 
