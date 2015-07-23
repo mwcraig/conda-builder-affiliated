@@ -24,6 +24,7 @@ platform:
 
 install:
     - cmd: assoc .py
+    - cmd: ftype Python.File
     - cmd: git submodule update --init --recursive
     - cmd: rmdir C:\cygwin /s /q
     - cmd: python Obvious-CI\bootstrap-obvious-ci-and-miniconda.py %CONDA_INSTALL_LOCN% %TARGET_ARCH% %CONDA_PY:~0,1% --without-obvci --miniconda-version latest
