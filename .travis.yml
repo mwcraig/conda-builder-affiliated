@@ -32,11 +32,10 @@ install:
     # Install custom version of conda-build for now (need to be able to pass
     # options to setup.py)
     - cd conda-build; python setup.py install; cd ..
-    # Install obvious-ci; run 2to3 first if the build is python 3.
-    - cd Obvious-CI; if [[ $BUILDER_PYTHON_VERSION == 3 ]]; then 2to3 -w .; fi; python setup.py install; cd ..
+    - conda install -c conda-forge conda-build-all
 
 script:
     # Get ready to build.
     - python affiliate-builder/prepare_packages.py requirements.yml
-    - if [[ -d recipes ]]; then obvci_conda_build_dir --build-condition="python $PYTHON_BUILD_RESTRICTIONS" recipes astropy; fi
+    - if [[ -d recipes ]]; then conda-build-all --matrix-condition="python $PYTHON_BUILD_RESTRICTIONS" --inspect-channels="astropy" --upload-channels="astropy" recipes; fi
 

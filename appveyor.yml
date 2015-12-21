@@ -49,17 +49,11 @@ install:
     # the scripts necessary to run conda skeleton -- there is a package
     # on astropy-ci-extras.
     - cmd: conda install -c astropy-ci-extras conda-build=1.18.1
-    # Install obvious-ci; run 2to3 first if the build is done on python 3.
-    - cmd: cd Obvious-CI & (if %BUILDER_PYTHON_VERSION%==3 2to3 -w .) & python setup.py install & cd ..
+    - cmd: conda install -c conda-forge conda-build-all
 
 # Skip .NET project specific build phase.
 build: off
 
 test_script:
     - "%CMD_IN_ENV% python affiliate-builder\\prepare_packages.py requirements.yml"
-    - if exist recipes %CMD_IN_ENV% obvci_conda_build_dir --build-condition="python %PYTHON_BUILD_RESTRICTIONS%" recipes astropy
-    # Right now fails happen immediately on trying to build.
-    # - python affiliate-builder\\check_build_results.py
-
-# Upload now occurs immediately after recipe is built.
-# on_success:
+    - if exist recipes %CMD_IN_ENV% obvci_conda_build_dir --matrix-condition="python %PYTHON_BUILD_RESTRICTIONS%" --inspect-channels="astropy" --upload-channels="astropy" recipes
