@@ -19,6 +19,10 @@ env:
         # python 2.6 and 3.3 for some packages.
         - PYTHON_BUILD_RESTRICTIONS="2.7*|>=3.4"
 
+        # The value of CONDA_NPY does not actually determine the build version,
+        # but apparently needs to be set.
+        - CONDA_NPY=19
+
 install:
     - python ./Obvious-CI/bootstrap-obvious-ci-and-miniconda.py ${CONDA_INSTALL_LOCN} ${TARGET_ARCH} $BUILDER_PYTHON_VERSION --without-obvci
     - export PATH=${CONDA_INSTALL_LOCN}/bin:$PATH
